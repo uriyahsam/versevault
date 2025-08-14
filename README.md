@@ -27,5 +27,6 @@ It delivers fresh scripture and quotes every day, and allows users to write and 
   - [Bible API](https://bible-api.com/) — daily scripture  
   - [RandomQuotes API](https://random-quotes-freeapi.vercel.app/api/random) — daily inspirational quotes  
 - **Hosting:** Netlify  
+  - [Live Site](https://versevault-us.netlify.app/) — Netlify
 
 ---
