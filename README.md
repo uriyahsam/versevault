@@ -3,7 +3,7 @@
 **VerseVault** is a daily Bible verse and inspirational quotes journaling web app.  
 It delivers fresh scripture and quotes every day, and allows users to write and store personal reflections — all in one clean, responsive interface.
 
-![VerseVault Screenshot](/images/site.png)
+![VerseVault Screenshot](/src/images/site.png)
 
 ---
 
