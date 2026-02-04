@@ -49,6 +49,26 @@ body {
   padding: 1rem 1.25rem;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-switch {
+  flex: 0 0 auto;
+}
+
+@media (max-width: 520px) {
+  .site-header {
+    flex-wrap: wrap;
+    gap: .75rem;
+  }
+  .nav a {
+    margin-left: .75rem;
+  }
+}
+
 .site-header h1 {
   font-size: 1.25rem;
   margin: 0
@@ -103,6 +123,37 @@ main {
 
 .journal-entry {
   margin-top: 1.5rem
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.journal-focus textarea {
+  min-height: 280px;
+}
+
+.label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: .75rem;
+}
+
+.label-row label {
+  margin: 0;
+}
+
+.word-count {
+  color: var(--muted);
+  font-size: .9rem;
+}
+
+.secondary-link {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
 }
 
 label {

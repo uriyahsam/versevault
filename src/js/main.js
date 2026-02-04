@@ -31,6 +31,12 @@ function route(){
     const container = document.getElementById("entry-list");
     renderEntryList(container);
   }
+
+  // If we switched to journal, restore draft + update word count
+  if (active.id === "journal") {
+    loadJournalDraft();
+    document.getElementById("entry-body-journal")?.focus();
+  }
 }
 window.addEventListener("hashchange", route);
 
@@ -39,6 +45,47 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
 // Dark mode
 initDarkToggle(document.getElementById("dark-mode-toggle"));
+
+// Draft support for Journal (focus mode)
+const DRAFT_KEY = "vv-draft";
+function countWords(text = "") {
+  const t = String(text).trim();
+  return t ? t.split(/\s+/).length : 0;
+}
+function updateJournalWordCount() {
+  const textarea = document.getElementById("entry-body-journal");
+  const out = document.getElementById("journal-word-count");
+  if (!textarea || !out) return;
+  out.textContent = `${countWords(textarea.value)} words`;
+}
+function loadJournalDraft() {
+  const titleEl = document.getElementById("entry-title-journal");
+  const bodyEl = document.getElementById("entry-body-journal");
+  const tagsEl = document.getElementById("entry-tags-journal");
+  if (!titleEl || !bodyEl || !tagsEl) return;
+
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if (!raw) return;
+    const draft = JSON.parse(raw);
+    titleEl.value = draft.title || "";
+    bodyEl.value = draft.body || "";
+    tagsEl.value = draft.tags || "";
+  } catch {
+    // ignore corrupted draft
+  }
+
+  updateJournalWordCount();
+}
+function saveJournalDraftDebounced() {
+  window.clearTimeout(saveJournalDraftDebounced._t);
+  saveJournalDraftDebounced._t = window.setTimeout(() => {
+    const title = document.getElementById("entry-title-journal")?.value || "";
+    const body = document.getElementById("entry-body-journal")?.value || "";
+    const tags = document.getElementById("entry-tags-journal")?.value || "";
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({ title, body, tags }));
+  }, 250);
+}
 
 // Load verse & quote on Home
 (async function initHome(){
@@ -110,6 +157,42 @@ document.getElementById("entry-form").addEventListener("submit", (e)=>{
   // jump to history to show result
   location.hash = "history";
 });
+
+// Journal page (focus mode) form
+const journalForm = document.getElementById("entry-form-journal");
+if (journalForm) {
+  const bodyEl = document.getElementById("entry-body-journal");
+  const titleEl = document.getElementById("entry-title-journal");
+  const tagsEl = document.getElementById("entry-tags-journal");
+
+  const onDraftInput = () => {
+    updateJournalWordCount();
+    saveJournalDraftDebounced();
+  };
+
+  titleEl?.addEventListener("input", onDraftInput);
+  bodyEl?.addEventListener("input", onDraftInput);
+  tagsEl?.addEventListener("input", onDraftInput);
+
+  const clearBtn = document.getElementById("clear-draft-btn");
+  clearBtn?.addEventListener("click", () => {
+    localStorage.removeItem(DRAFT_KEY);
+    window.setTimeout(updateJournalWordCount, 0);
+  });
+
+  journalForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const title = titleEl?.value || "";
+    const body = bodyEl?.value || "";
+    const tags = tagsEl?.value || "";
+
+    addEntry({ title, body, tags });
+    localStorage.removeItem(DRAFT_KEY);
+    e.target.reset();
+    updateJournalWordCount();
+    showToast("Entry saved ✅");
+  });
+}
 
 // Initial route
 route();
