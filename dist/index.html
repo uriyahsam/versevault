@@ -1,99 +1,109 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0" />
-    <title>VerseVault — Daily Verse, Quote & Journal</title>
-    <script type="module" crossorigin src="/assets/index-DRSJIzWM.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-G94cLXOj.css">
-  </head>
-  <body>
-    <header class="site-header">
-      <h1>VerseVault</h1>
-      <nav class="nav">
-        <a href="#home" data-route>Home</a>
-        <a href="#journal" data-route>Journal</a>
-        <a href="#history" data-route>History</a>
-        <a href="#settings" data-route>Settings</a>
-      </nav>
-    </header>
 
-    <main id="app">
-      <!-- Home -->
-      <section id="home" class="view">
-        <section class="cards">
-          <article class="card" id="verse-card">
-            <h2>Daily Verse</h2>
-            <div id="daily-verse" class="content loading">Loading verse…</div>
-          </article>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VerseVault — Daily Verse, Quote & Journal</title>
+  <script type="module" crossorigin src="/assets/index-Ci8oNpBH.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-8AOaHVrM.css">
+</head>
 
-          <article class="card" id="quote-card">
-            <h2>Daily Quote</h2>
-            <div id="daily-quote" class="content loading">Loading quote…</div>
-          </article>
-        </section>
+<body>
+  <header class="site-header">
+    <h1>VerseVault</h1>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#home" data-route>Home</a>
+      <a href="#journal" data-route>Journal</a>
+      <a href="#history" data-route>History</a>
+      <a href="#settings" data-route>Settings</a>
+    </nav>
+  </header>
 
-        <section class="journal-entry">
-          <h2>New Journal Entry</h2>
-          <form id="entry-form">
-            <label>
-              Title
-              <input type="text" id="entry-title" required placeholder="e.g., Gratitude & Guidance" />
-            </label>
+  <main id="app">
+    <!-- Home -->
+    <section id="home" class="view" aria-labelledby="home-title">
+      <h2 id="home-title" class="sr-only">Home</h2>
 
-            <label>
-              Your reflection
-              <textarea id="entry-body" rows="6" required placeholder="Write your thoughts, prayers, insights…"></textarea>
-            </label>
+      <section class="cards" aria-label="Daily content">
+        <article class="card" id="verse-card" aria-labelledby="verse-title">
+          <h2 id="verse-title">Daily Verse</h2>
+          <div id="daily-verse" class="content loading" aria-live="polite">
+            Loading verse…
+          </div>
+        </article>
 
-            <label>
-              Tags (comma-separated)
-              <input type="text" id="entry-tags" placeholder="gratitude, faith, peace" />
-            </label>
-
-            <div class="form-row">
-              <button type="submit">Save Entry</button>
-              <button type="reset" class="secondary">Clear</button>
-            </div>
-          </form>
-        </section>
+        <article class="card" id="quote-card" aria-labelledby="quote-title">
+          <h2 id="quote-title">Daily Quote</h2>
+          <div id="daily-quote" class="content loading" aria-live="polite">
+            Loading quote…
+          </div>
+        </article>
       </section>
 
-      <!-- Journal (same form, different route; kept simple) -->
-      <section id="journal" class="view" hidden>
-        <h2>Write a New Entry</h2>
-        <p>Use the Home page to see the daily verse & quote while writing. Entries save to your browser.</p>
-        <a href="#home" class="button-link">Go to Home</a>
-      </section>
+      <section class="journal-entry" aria-labelledby="new-entry-title">
+        <h2 id="new-entry-title">New Journal Entry</h2>
 
-      <!-- History -->
-      <section id="history" class="view" hidden>
-        <h2>Journal History</h2>
-        <div id="entry-list"></div>
-      </section>
+        <form id="entry-form">
+          <label for="entry-title">Title</label>
+          <input type="text" id="entry-title" required placeholder="e.g., Gratitude & Guidance" autocomplete="off" />
 
-      <!-- Settings -->
-      <section id="settings" class="view" hidden>
-        <h2>Settings</h2>
-        <div class="setting">
-          <label class="switch">
-            <input type="checkbox" id="dark-mode-toggle" />
-            <span class="slider"></span>
-          </label>
-          <span>Dark mode</span>
-        </div>
-      </section>
-    </main>
+          <label for="entry-body">Your reflection</label>
+          <textarea id="entry-body" rows="6" required placeholder="Write your thoughts, prayers, insights…"></textarea>
 
-<footer class="site-footer">
+          <label for="entry-tags">Tags (comma-separated)</label>
+          <input type="text" id="entry-tags" placeholder="gratitude, faith, peace" autocomplete="off" />
+
+          <div class="form-row">
+            <button type="submit">Save Entry</button>
+            <button type="reset" class="secondary">Clear</button>
+          </div>
+        </form>
+      </section>
+    </section>
+
+    <!-- Journal -->
+    <section id="journal" class="view" hidden aria-labelledby="journal-title">
+      <h2 id="journal-title">Write a New Entry</h2>
+      <p>
+        Use the Home page to see the daily verse &amp; quote while writing.
+        Entries save to your browser.
+      </p>
+      <a href="#home" class="button-link">Go to Home</a>
+    </section>
+
+    <!-- History -->
+    <section id="history" class="view" hidden aria-labelledby="history-title">
+      <h2 id="history-title">Journal History</h2>
+      <div id="entry-list"></div>
+    </section>
+
+    <!-- Settings -->
+    <section id="settings" class="view" hidden aria-labelledby="settings-title">
+      <h2 id="settings-title">Settings</h2>
+
+      <div class="setting">
+        <label class="switch">
+          <input type="checkbox" id="dark-mode-toggle" />
+          <span class="slider" aria-hidden="true"></span>
+          <span class="switch-text">Dark mode</span>
+        </label>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
     <p>
-        &copy; <span id="year"></span> VerseVault by Uriyah Sam |
-        <a href="https://github.com/uriyahsam/versevault/" target="_blank">GitHub</a> |
-        <a href="https://www.linkedin.com/in/uriyahsam/" target="_blank">LinkedIn</a>
+      &copy; <span id="year"></span> VerseVault by Uriyah Sam |
+      <a href="https://github.com/uriyahsam/versevault/" target="_blank" rel="noopener noreferrer">GitHub</a>
+      |
+      <a href="https://www.linkedin.com/in/uriyahsam/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </p>
-</footer>
+  </footer>
 
-  </body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+</body>
+
 </html>

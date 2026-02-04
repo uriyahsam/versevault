@@ -61,3 +61,35 @@ export async function getDailyQuote() {
     author: data.author ?? "Unknown",
   };
 }
+
+export async function getAuthorSummary(authorName) {
+  const name = (authorName || "").trim();
+  if (!name || name.toLowerCase() === "unknown") {
+    return {
+      title: "Unknown",
+      description: "Author information unavailable.",
+      extract: "No author details found for this quote.",
+      thumbnail: null,
+      url: null,
+    };
+  }
+
+  // Wikipedia REST Summary endpoint
+  const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`;
+
+  const data = await safeJsonFetch(url, {
+    title: name,
+    description: "Author information unavailable.",
+    extract: "No author details found for this quote.",
+    thumbnail: null,
+    content_urls: null,
+  });
+
+  return {
+    title: data.title || name,
+    description: data.description || "",
+    extract: data.extract || "No author details found for this quote.",
+    thumbnail: data.thumbnail?.source || null,
+    url: data.content_urls?.desktop?.page || null,
+  };
+}
